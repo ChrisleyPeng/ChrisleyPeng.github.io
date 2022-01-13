@@ -79,7 +79,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
                   aria-expanded="false">
                   <div class="profile_img">
-                    <img src="assets/images/profileimg.jpg" class="rounded-circle" alt="" />
+                    <img src="assets/images/avatar1.jpg" class="rounded-circle" alt="" />
                     <div class="user-active">
                       <span></span>
                     </div>
@@ -87,7 +87,7 @@
                 </a>
                 <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
                   <li class="user-info">
-                    <h5 class="user-name">John Deo</h5>
+                    <h5 class="user-name">Amy</h5>
                     <span class="status ml-2">Available</span>
                   </li>
                   <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
@@ -121,19 +121,11 @@
     </nav>
     <!-- //breadcrumbs -->
 
-    <!-- card heading -->
-    <div class="cards__heading">
-      <h3>Weather Data</h3>
-    </div>
-    <!-- //card heading -->
-
     <!-- content block style 1-->
     <div class="card card_border p-lg-5 p-3 mb-4">
       <div class="card-body py-3 p-0">
-        
-            <img src="assets/images/data.png" alt="" class="img-fluid rounded" />
-          
-        
+        <div id="openweathermap-widget-15"></div>
+        <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 15,cityid: '1880252',appid: '4a1581324c56bd80a8a06d95df976c9c',units: 'metric',containerid: 'openweathermap-widget-15',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
       </div>
     </div>
     <!-- //content block style 1-->
