@@ -9,7 +9,7 @@ setInterval(function() {
 	else{
 		time=0;
 	}
-  }, 2000)
+  }, 900000)
 
 
 
