@@ -23,7 +23,7 @@ function loaddata(time){
 		{ 
 			ann1_predict.push(data["prediction"][2]["y"+i.toString()].slice(time,time+1));	
 		}
-		linechart.data.datasets[3].data = ann1_predict;
+		linechart.data.datasets[1].data = ann1_predict;
 	    
 		var date = new Array()
 		for (var i=1;i<13;i++)
