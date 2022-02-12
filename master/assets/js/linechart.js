@@ -12,26 +12,41 @@ setInterval(function() {
   }, 2000)
 
 
+
 function loaddata(time){
     fetch("https://raw.githubusercontent.com/CL-SU/CL-SU.github.io/master/data.json")
     .then((response) => {
         return response.json()
     })
     .then((data) => {
+		// arx_predict = data["prediction"][0]["y1"].slice(time,time+1)
+		// rf_predict = data["prediction"][1]["y1"].slice(time,time+1)
+		// ann1_predict = data["prediction"][2]["y1"].slice(time,time+1)
+		var arx_predict = new Array()
+		var rf_predict = new Array()
 		var ann1_predict = new Array()
 		for (var i=1;i<13;i++)
 		{ 
+			arx_predict.push(data["prediction"][0]["y"+i.toString()].slice(time,time+1));
+			rf_predict.push(data["prediction"][1]["y"+i.toString()].slice(time,time+1));
 			ann1_predict.push(data["prediction"][2]["y"+i.toString()].slice(time,time+1));	
 		}
-		linechart.data.datasets[1].data = ann1_predict;
-	    
+		// ar_predict = data["prediction"][0]["data"].slice(time,time+1)+data["prediction"][0]["data"].slice(time,time+1)+data["prediction"][0]["data"].slice(time,time+1)+data["prediction"][0]["data"].slice(time,time+1);
+		linechart.data.datasets[1].data = arx_predict;
+		// rf_predict = data["prediction"][1]["data"].slice(time,time+period);
+		linechart.data.datasets[2].data = rf_predict;
+		// ann_predict = data["prediction"][0]["data"].slice(time+period,time+2*period);
+		linechart.data.datasets[3].data = ann1_predict;
 		var date = new Array()
+		
 		for (var i=1;i<13;i++)
 		{ 
 			date.push(data["Hour"][time+i-1]+' (' +i+' hr later)')
 		}
+		
 		linechart.options.scales.xAxes[0].scaleLabel.labelString = data["Month"][time]+"."+data["Day"][time]
 		linechart.data.labels=date
+		// console.log(date)
 		linechart.data.datasets[0].data = data["y"].slice(time,time+period)
 		linechart.update();
     })
@@ -39,6 +54,8 @@ function loaddata(time){
         console.log(err)
     })
 }
+
+
 
 var linechart = new Chart(document.getElementById("linechart"), 
 {
@@ -56,6 +73,18 @@ var linechart = new Chart(document.getElementById("linechart"),
 			data: [1,2,3,2,5,1,7,1,4,2,3,2,5,1,7,1,4,2,3,2,5,10,0,1],
 			fill: false,
 		}, {
+			label: 'ARX prediction',
+			backgroundColor: window.chartColors.purple,
+			borderColor: window.chartColors.purple,
+			data: [40,20,35,25,50,10,70,10,40,20,35,25,50,10,70,10,40,20,35,25,50,10,70,10],
+			fill: false,
+		}, {
+			label: 'RF prediction',
+			fill: false,
+			backgroundColor: window.chartColors.navy,
+			borderColor: window.chartColors.navy,
+			data: [10,40,20,35,25,50,10,70,40,20,35,25,50,10,70,10,40,20,35,25,50,10,70,10],
+		},{
 			label: 'ANN(1) prediction',
 			backgroundColor: "rgb(00, 125, 00)",
 			borderColor: "rgb(00, 125, 00)",
@@ -66,16 +95,25 @@ var linechart = new Chart(document.getElementById("linechart"),
 	},
 	options: {
 		responsive: true,
+		// title: {
+		// 	display: true,
+		// 	text: 'Chart.js Line Chart'
+		// },
 		tooltips: {
 			mode: 'index',
 			intersect: false,
 		},
+		// hover: {
+		// 	mode: 'nearest',
+		// 	intersect: true,
+		// },
 		scales: {
 			xAxes: [{
 				display: true,
 				scaleLabel: {
 					display: true,
 					labelString: 'Hour',
+					
 				}
 			}],
 			yAxes: [{
@@ -84,15 +122,15 @@ var linechart = new Chart(document.getElementById("linechart"),
 					max: 1200,
 					// tickInterval:100,
 				},
+				
 				display: true,
 				scaleLabel: {
 					display: true,
 					labelString: 'Solar Radiation',
+				
+				
 				}
 			}]
 		}
 	}
 });
-
-
-
