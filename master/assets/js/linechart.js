@@ -1,7 +1,7 @@
-var time=31;
-var period=12;
+var time=0;
+var period=24;
 setInterval(function() {
-	if(time<10363-period)
+	if(time<14473-period)
 	{
 		loaddata(time);
 		time++;
@@ -14,25 +14,14 @@ setInterval(function() {
 
 
 function loaddata(time){
-    fetch("https://raw.githubusercontent.com/CL-SU/CL-SU.github.io/master/data.json")
+    fetch("https://raw.githubusercontent.com/ChrisleyPeng/ChrisleyPeng.github.io/main/master/data.json")
     .then((response) => {
         return response.json()
     })
     .then((data) => {
-		var arx_predict = new Array()
-		for (var i=1;i<13;i++)
-		{ 
-			arx_predict.push(data["prediction"][0]["y"+i.toString()].slice(time,time+1));
-		}
-		linechart.data.datasets[1].data = arx_predict;
+		linechart.data.datasets[1].data = data["prediction"].slice(time,time+period)
 		var date = new Array()
-		
-		for (var i=1;i<13;i++)
-		{ 
-			date.push(data["Hour"][time+i-1]+' (' +i+' hr later)')
-		}
-		
-		linechart.options.scales.xAxes[0].scaleLabel.labelString = data["Month"][time]+"."+data["Day"][time]
+		linechart.options.scales.xAxes[0].scaleLabel.labelString = data["Month"][time]+"."+data["Day"][time]+" "+data["Hour"][time]+":"+data["Minute"][time]
 		linechart.data.labels=date
 		linechart.data.datasets[0].data = data["y"].slice(time,time+period)
 		linechart.update();
@@ -48,18 +37,18 @@ var linechart = new Chart(document.getElementById("linechart"),
 {
 	type: 'line',
 	data: {
-		labels: ['y1','y2','y3','y4','y5','y6','y7','y8','y9','y10', 'y11','y12'],
+		labels: ['y1','y2','y3','y4','y5','y6','y7','y8','y9','y10', 'y11','y12','y13','y14','y15','y16','y17','y18','y19','y20','y21','y22', 'y23','y24'],
 		datasets: [{
-			label: 'Real-time data',
+			label: 'Groundtruth',
 			backgroundColor: "rgb(255, 159, 64)",
 			borderColor: "rgb(255, 159, 64)",
-			data: [1,2,3,2,5,1,7,1,4,2,3,2,5,1,7,1,4,2,3,2,5,10,0,1],
+			data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 			fill: false,
 		}, {
-			label: 'ARX prediction',
+			label: 'Prediction',
 			backgroundColor: window.chartColors.purple,
 			borderColor: window.chartColors.purple,
-			data: [40,20,35,25,50,10,70,10,40,20,35,25,50,10,70,10,40,20,35,25,50,10,70,10],
+			data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 			fill: false,
 		}]
 	},
@@ -74,7 +63,7 @@ var linechart = new Chart(document.getElementById("linechart"),
 				display: true,
 				scaleLabel: {
 					display: true,
-					labelString: 'Hour',
+					labelString: 'Minute',
 					
 				}
 			}],
