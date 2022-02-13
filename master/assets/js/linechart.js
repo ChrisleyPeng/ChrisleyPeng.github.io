@@ -20,8 +20,12 @@ function loaddata(time){
     })
     .then((data) => {
 		linechart.data.datasets[1].data = data["prediction"].slice(time,time+period)
-		var date = new Array()
-		linechart.options.scales.xAxes[0].scaleLabel.labelString = data["Month"][time]+"."+data["Day"][time]+" "+data["Hour"][time]+":"+data["Minute"][time]
+		linechart.options.scales.xAxes[0].scaleLabel.labelString = data["Month"][time]+"/"+data["Day"][time]
+	    	var date = new Array()
+	    	for (var i=time;i<time+period;i++)
+		{
+			date.push(data["Hour"][i]+':'+data["Minute"][i])
+		}
 		linechart.data.labels=date
 		linechart.data.datasets[0].data = data["y"].slice(time,time+period)
 		linechart.update();
@@ -77,7 +81,7 @@ var linechart = new Chart(document.getElementById("linechart"),
 				display: true,
 				scaleLabel: {
 					display: true,
-					labelString: 'Solar Radiation',
+					labelString: 'Solar Radiation (W/m2)',
 				
 				
 				}
