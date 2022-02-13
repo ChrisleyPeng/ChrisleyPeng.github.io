@@ -24,7 +24,13 @@ function loaddata(time){
 	    	var date = new Array()
 	    	for (var i=time;i<time+period;i++)
 		{
-			date.push(data["Hour"][i]+':'+data["Minute"][i])
+			if (data["Minute"][i] == 0)
+			{
+				date.push(data["Hour"][i]+':'+data["Minute"][i]+"0")
+			}else
+			{
+				date.push(data["Hour"][i]+':'+data["Minute"][i])
+			}
 		}
 		linechart.data.labels=date
 		linechart.data.datasets[0].data = data["y"].slice(time,time+period)
